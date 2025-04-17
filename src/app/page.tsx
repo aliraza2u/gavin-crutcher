@@ -5,6 +5,7 @@ import {
   //  Libre_Caslon_Display,
   Roboto,
 } from "next/font/google";
+import { useEffect, useState } from "react";
 
 // const caslon = Libre_Caslon_Display({
 //   weight: "400",
@@ -17,8 +18,24 @@ const roboto = Roboto({
 });
 
 export default function HeroSection() {
+  const [vh, setVh] = useState("100vh");
+
+  useEffect(() => {
+    const setHeight = () => {
+      const vhUnit = window.innerHeight * 0.01;
+      setVh(`${vhUnit * 100}px`);
+    };
+
+    setHeight();
+    window.addEventListener("resize", setHeight);
+
+    return () => window.removeEventListener("resize", setHeight);
+  }, []);
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-[url(/gavin-crutcher-cover-lg.jpeg)] sm:bg-[url(/gavin-crutcher-cover-md.jpeg)] xl:bg-[url(/gavin-crutcher-cover-lg.jpeg)] bg-center sm:bg-left xl:bg-center bg-cover bg-no-repeat">
+    <section
+      style={{ height: vh }}
+      className="relative w-full overflow-hidden bg-[url(/gavin-crutcher-cover-lg.jpeg)] sm:bg-[url(/gavin-crutcher-cover-md.jpeg)] xl:bg-[url(/gavin-crutcher-cover-lg.jpeg)] bg-center sm:bg-left xl:bg-center bg-cover bg-no-repeat"
+    >
       <div className="absolute top-[6%] inset-x-0 sm:inset-x-auto sm:top-[10%] sm:left-[42%] md:left-[50%] xl:left-[63%] text-white z-10 max-w-md flex flex-col items-center sm:bg-[#ffffff4d] py-9 px-10 rounded-xl">
         <Image
           src="/logo.png"
